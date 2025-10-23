@@ -1,0 +1,25 @@
+{
+  "version": "0.2",
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "language": "en",
+  "dictionaryDefinitions": [
+    {
+      "name": "url-shortener",
+      "path": "./configs/cspell/url-shortener.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["url-shortener"],
+  "ignorePaths": [
+    "node_modules/",
+    "pnpm-lock.yaml",
+    "dist/",
+    "*.svg",
+    "*.tsbuildinfo",
+    "*.mp4",
+    ".*",
+    "pnpm-workspace.yaml",
+    "**/husky/**",
+    "todo.md"
+  ]
+}
