@@ -11,6 +11,7 @@ export class TypeormUserMapper {
       password: Password.fromValid(userEntity.password),
       verificationToken: userEntity.verificationToken,
       isEmailVerified: userEntity.isEmailVerified,
+      verificationTokenExpiresAt: userEntity.verificationTokenExpiresAt,
       createdAt: userEntity.createdAt,
       updatedAt: userEntity.updatedAt,
     });
@@ -23,6 +24,9 @@ export class TypeormUserMapper {
       password: user.password.value,
       isEmailVerified: user.isEmailVerified,
       verificationToken: user.verificationToken,
+      verificationTokenExpiresAt: user.verificationTokenExpiresAt,
+      passwordResetToken: user.passwordResetToken,
+      passwordResetTokenExpiresAt: user.passwordResetTokenExpiresAt,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

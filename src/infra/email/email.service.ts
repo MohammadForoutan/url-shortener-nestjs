@@ -15,4 +15,15 @@ export class EmailServiceImp implements EmailService {
     );
     return Promise.resolve();
   }
+
+  async sendPasswordResetEmail(email: string, token: string): Promise<void> {
+    const resetPasswordUrl = new URL(
+      `${envConfig.APP_URL}/reset-password?token=${token}`,
+    );
+    this.pinoLogger.info(
+      `Sending password reset email to ${email} with token ${token},
+       Please click the link to reset your password: ${resetPasswordUrl}`,
+    );
+    return Promise.resolve();
+  }
 }

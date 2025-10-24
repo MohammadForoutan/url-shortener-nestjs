@@ -3,13 +3,12 @@
 - [x] unit of work
 - [x] user register , login
 - [x] email verification
-- [ ] forgot password
-- [ ] change email flow with email verification
+- [x] forgot password
 - [ ] exception handling - filter interceptor nestjs
-- [ ] value object pattern for user and url
+- [x] value object pattern for user and url
 - [ ] check domain and logic with khalvai
 - [ ] user urls list - pagination, filter, sort
-- [ ] add expiration date to url
+- [x] add expiration date to url
 - [ ] update url - (short url, original url, expiration date)
 
 ---

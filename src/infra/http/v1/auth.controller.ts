@@ -1,7 +1,9 @@
 import {
+  ForgotPasswordUseCase,
   LoginUserUseCase,
   RegisterUserUseCase,
   ResendVerificationEmailUseCase,
+  ResetPasswordUseCase,
   VerifyEmailUseCase,
 } from '@app/application/url-shortener/usecases';
 import { ResponseFormat } from '@app/infra/interfaces';
@@ -16,7 +18,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { LoginDto, RegisterDto } from './dtos';
+import {
+  ForgotPasswordDto,
+  LoginDto,
+  RegisterDto,
+  ResetPasswordDto,
+} from './dtos';
 
 @Controller({
   path: 'auth',
@@ -29,6 +36,8 @@ export class AuthV1Controller {
     private loginUserUseCase: LoginUserUseCase,
     private verifyEmailUseCase: VerifyEmailUseCase,
     private resendVerificationEmailUseCase: ResendVerificationEmailUseCase,
+    private forgotPasswordUseCase: ForgotPasswordUseCase,
+    private resetPasswordUseCase: ResetPasswordUseCase,
   ) {}
   @Post('login')
   async login(
@@ -81,6 +90,32 @@ export class AuthV1Controller {
       statusCode: HttpStatus.OK,
       success: true,
       message: 'Verification email sent successfully',
+    };
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(
+    @Body() forgotPasswordDto: ForgotPasswordDto,
+  ): Promise<ResponseFormat<void>> {
+    await this.forgotPasswordUseCase.execute(forgotPasswordDto);
+    return {
+      data: undefined,
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Password reset email sent successfully',
+    };
+  }
+
+  @Post('reset-password')
+  async resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ): Promise<ResponseFormat<void>> {
+    await this.resetPasswordUseCase.execute(resetPasswordDto);
+    return {
+      data: undefined,
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Password reset successfully',
     };
   }
 }

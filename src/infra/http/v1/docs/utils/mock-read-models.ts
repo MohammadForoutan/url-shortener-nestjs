@@ -14,6 +14,7 @@ const userInput = {
   id: '123e4567-e89b-12d3-a456-426614174000',
   password: Password.fromInput('Password123!s'),
   verificationToken: null,
+  verificationTokenExpiresAt: null,
   isEmailVerified: false,
   createdAt: new Date(),
   updatedAt: new Date(),

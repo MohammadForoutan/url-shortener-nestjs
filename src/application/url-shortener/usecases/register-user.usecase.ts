@@ -37,6 +37,7 @@ export class RegisterUserUseCase {
       email: input.email,
       password: Password.fromValid(hashedPassword),
       verificationToken: null,
+      verificationTokenExpiresAt: null,
       isEmailVerified: false,
     });
 

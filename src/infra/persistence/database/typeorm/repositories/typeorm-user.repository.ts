@@ -1,6 +1,7 @@
 import { UserRepository } from '@app/application/url-shortener/ports/user.repository';
 import { User } from '@app/domain/url-shortener/user';
 import { Injectable } from '@nestjs/common';
+import { MoreThan } from 'typeorm';
 
 import { UserEntity } from '../entities/user.entity';
 import { TypeormUserMapper } from '../mapper';
@@ -42,6 +43,17 @@ export class TypeormUserRepository implements UserRepository {
     return this.unitOfWork.doTransactional(async manager => {
       const userEntity = await manager.findOne(UserEntity, {
         where: { verificationToken },
+      });
+      return userEntity ? TypeormUserMapper.toDomain(userEntity) : null;
+    });
+  }
+  findByPasswordResetToken(passwordResetToken: string): Promise<User | null> {
+    return this.unitOfWork.doTransactional(async manager => {
+      const userEntity = await manager.findOne(UserEntity, {
+        where: {
+          passwordResetToken,
+          passwordResetTokenExpiresAt: MoreThan(new Date()),
+        },
       });
       return userEntity ? TypeormUserMapper.toDomain(userEntity) : null;
     });
