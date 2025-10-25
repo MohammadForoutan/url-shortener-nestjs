@@ -8,6 +8,7 @@ import { UserRepository } from '../ports/user.repository';
 interface GenerateCustomUrlCommand {
   originalUrl: string;
   customShortString: string;
+  expirationDate: Date | null;
   ownerId: string;
 }
 
@@ -25,9 +26,6 @@ export class GenerateCustomUrlUseCase {
     input: GenerateCustomUrlCommand,
   ): Promise<GenerateCustomUrlResponse> {
     const shortUrl = ShortLink.fromInput(input.customShortString);
-    if (!shortUrl) {
-      throw new BadRequestException('Custom short url is not valid');
-    }
 
     const isShortUrlAlreadyExists = await this.urlRepository.findByShortUrl(
       shortUrl.value,
@@ -46,6 +44,7 @@ export class GenerateCustomUrlUseCase {
       shortUrl,
       isCustom: true,
       clickCount: 0,
+      expirationDate: input.expirationDate ?? null,
       owner,
     });
 

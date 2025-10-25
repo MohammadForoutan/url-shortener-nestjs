@@ -8,6 +8,7 @@ import { UserRepository } from '../ports/user.repository';
 interface GenerateRandomUrlCommand {
   originalUrl: string;
   ownerId: string;
+  expirationDate: Date | null;
 }
 
 interface GenerateRandomUrlResponse {
@@ -34,6 +35,7 @@ export class GenerateRandomUrlUseCase {
       shortUrl: ShortLink.fromInput(),
       isCustom: false,
       clickCount: 0,
+      expirationDate: input.expirationDate,
       owner,
     });
     const createdUrl = await this.urlRepository.create(newUrl);

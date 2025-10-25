@@ -1,4 +1,4 @@
-import { EmailService } from '@app/application/url-shortener/interfaces/email-service.interface';
+import { EmailService } from '@app/application/url-shortener/ports/email.service';
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 

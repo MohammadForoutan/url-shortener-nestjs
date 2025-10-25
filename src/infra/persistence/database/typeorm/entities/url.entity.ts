@@ -27,6 +27,9 @@ export class UrlEntity {
   @Column({ type: 'integer', default: 0 })
   clickCount: number;
 
+  @Column({ type: 'timestamp', nullable: true })
+  expirationDate: Date | null;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

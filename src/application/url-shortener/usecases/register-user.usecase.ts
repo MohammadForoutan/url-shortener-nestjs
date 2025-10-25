@@ -3,7 +3,7 @@ import { Password } from '@app/domain/url-shortener/value-objects/password.vo';
 import { HashUtil } from '@app/infra/hash';
 import { ConflictException, Injectable } from '@nestjs/common';
 
-import { EmailService } from '../interfaces/email-service.interface';
+import { EmailService } from '../ports/email.service';
 import { UserRepository } from '../ports/user.repository';
 
 interface RegisterUserCommand {

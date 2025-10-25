@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { EmailService } from '../interfaces/email-service.interface';
+import { EmailService } from '../ports/email.service';
 import { UserRepository } from '../ports/user.repository';
 
 interface ResendVerificationEmailCommand {

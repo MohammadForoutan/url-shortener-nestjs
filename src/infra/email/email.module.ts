@@ -1,4 +1,4 @@
-import { EmailService } from '@app/application/url-shortener/interfaces/email-service.interface';
+import { EmailService } from '@app/application/url-shortener/ports/email.service';
 import { Module } from '@nestjs/common';
 
 import { EmailServiceImp } from './email.service';

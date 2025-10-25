@@ -1,5 +1,9 @@
 import { Url } from '@app/domain/url-shortener/url';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { UrlRepository } from '../ports/url.repository';
 
@@ -19,6 +23,10 @@ export class RedirectUrlUseCase {
     const url = await this.urlRepository.findByShortUrl(input.shortUrl);
     if (!url) {
       throw new NotFoundException('Url not found');
+    }
+
+    if (url.isExpired()) {
+      throw new BadRequestException('Url expired');
     }
 
     url.incrementClickCount();

@@ -3,7 +3,7 @@ import type { UrlReadModel } from '@app/application/url-shortener/read-model';
 import { applyDecorators } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-import { generateDocSchema } from './utils';
+import { generateDocSchema, generateDocSchemaPaginatedList } from './utils';
 import { mockReadModels } from './utils/mock-read-models';
 
 export const GenerateRandomUrlDoc = () =>
@@ -30,6 +30,34 @@ export const GenerateCustomUrlDoc = () =>
     ApiResponse({
       status: 201,
       description: 'Custom url generated successfully',
+      example: generateDocSchema<UrlReadModel>({ data: mockReadModels.url }),
+    }),
+  );
+
+export const ListUserUrlsDoc = () =>
+  applyDecorators(
+    ApiBearerAuth(),
+    ApiOperation({
+      summary: 'List user urls',
+      description: 'List user urls',
+    }),
+    ApiResponse({
+      status: 200,
+      description: 'User urls listed successfully',
+      example: generateDocSchemaPaginatedList({ data: mockReadModels.url }),
+    }),
+  );
+
+export const UpdateUrlDoc = () =>
+  applyDecorators(
+    ApiBearerAuth(),
+    ApiOperation({
+      summary: 'Update a url',
+      description: 'Update a url',
+    }),
+    ApiResponse({
+      status: 200,
+      description: 'Url updated successfully',
       example: generateDocSchema<UrlReadModel>({ data: mockReadModels.url }),
     }),
   );

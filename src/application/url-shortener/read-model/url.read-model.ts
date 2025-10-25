@@ -26,6 +26,14 @@ export class UrlReadModel {
     example: 'https://www.google.com/123e4567-e89b-12d3-a456-426614174000',
   })
   shortUrl: string;
+
+  @ApiProperty({
+    description: 'The expiration date of the url',
+    example: '2021-01-01T00:00:00.000Z',
+    nullable: true,
+  })
+  expirationDate: Date | null;
+
   @ApiProperty({
     description: 'The created at of the url',
     example: '2021-01-01T00:00:00.000Z',
@@ -42,6 +50,7 @@ export class UrlReadModel {
     this.originalUrl = url.originalUrl.value;
     this.clickCount = url.clickCount;
     this.shortUrl = `${envConfig.APP_URL}${url.shortUrl.value}`;
+    this.expirationDate = url.expirationDate;
     this.createdAt = url.createdAt;
     this.updatedAt = url.updatedAt;
   }

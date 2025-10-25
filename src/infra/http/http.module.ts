@@ -3,11 +3,13 @@ import {
   GenerateCustomUrlUseCase,
   GenerateRandomUrlUseCase,
   GetCurrentLoginUserUseCase,
+  ListUserUrlsUseCase,
   LoginUserUseCase,
   RedirectUrlUseCase,
   RegisterUserUseCase,
   ResendVerificationEmailUseCase,
   ResetPasswordUseCase,
+  UpdateUrlUseCase,
   VerifyEmailUseCase,
 } from '@app/application/url-shortener/usecases';
 import { Module } from '@nestjs/common';
@@ -42,6 +44,8 @@ import { UserV1Controller } from './v1/user.controller';
     GenerateRandomUrlUseCase,
     GenerateCustomUrlUseCase,
     RedirectUrlUseCase,
+    ListUserUrlsUseCase,
+    UpdateUrlUseCase,
   ],
 })
 export class HttpModule {}

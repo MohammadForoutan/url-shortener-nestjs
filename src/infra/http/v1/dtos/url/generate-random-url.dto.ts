@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class GenerateRandomUrlDto {
   @IsString()
@@ -9,4 +9,12 @@ export class GenerateRandomUrlDto {
     example: 'https://www.google.com',
   })
   originalUrl: string;
+
+  @IsOptional()
+  @IsDate()
+  @ApiProperty({
+    description: 'The expiration date of the url',
+    example: '2025-10-25',
+  })
+  expirationDate: Date | null = null;
 }

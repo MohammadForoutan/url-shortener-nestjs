@@ -7,7 +7,6 @@ import {
   Password,
   ShortLink,
 } from '@app/domain/url-shortener/value-objects';
-import { nanoid } from 'nanoid';
 
 const userInput = {
   email: 'test@example.com',
@@ -26,6 +25,7 @@ const urlInput = {
   shortUrl: ShortLink.fromInput('my custom url'),
   isCustom: true,
   clickCount: 0,
+  expirationDate: null,
   createdAt: new Date(),
   updatedAt: new Date(),
   owner: User.create(userInput),

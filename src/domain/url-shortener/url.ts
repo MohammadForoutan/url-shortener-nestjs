@@ -2,15 +2,16 @@ import { AggregateRoot } from '@app/core/entities/aggregate';
 import { generateId } from '@app/core/generate-id.util';
 
 import type { User } from './user';
-import type { ShortLink } from './value-objects/short-link.vo';
 
 import { OriginalLink } from './value-objects/original-link.vo';
+import { ShortLink } from './value-objects/short-link.vo';
 
 export class Url extends AggregateRoot<string> {
   public originalUrl: OriginalLink;
   public shortUrl: ShortLink;
   public isCustom: boolean;
   public clickCount: number;
+  public expirationDate: Date | null;
   public createdAt: Date;
   public updatedAt: Date;
   public owner: User;
@@ -21,6 +22,7 @@ export class Url extends AggregateRoot<string> {
     shortUrl: ShortLink;
     isCustom: boolean;
     clickCount: number;
+    expirationDate: Date | null;
     createdAt: Date;
     updatedAt: Date;
     owner: User;
@@ -31,6 +33,7 @@ export class Url extends AggregateRoot<string> {
     this.shortUrl = props.shortUrl;
     this.isCustom = props.isCustom;
     this.clickCount = props.clickCount;
+    this.expirationDate = props.expirationDate;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.owner = props.owner;
@@ -42,6 +45,7 @@ export class Url extends AggregateRoot<string> {
     shortUrl: ShortLink;
     isCustom: boolean;
     clickCount: number | null;
+    expirationDate: Date | null;
     createdAt?: Date;
     updatedAt?: Date;
     owner: User;
@@ -56,6 +60,7 @@ export class Url extends AggregateRoot<string> {
       shortUrl: props.shortUrl,
       isCustom: props.isCustom,
       clickCount,
+      expirationDate: props.expirationDate,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
       owner: props.owner,
@@ -68,5 +73,26 @@ export class Url extends AggregateRoot<string> {
 
   incrementClickCount(): void {
     this.clickCount++;
+  }
+
+  isExpired(): boolean {
+    return this.expirationDate ? this.expirationDate < new Date() : false;
+  }
+
+  update(props: {
+    originalUrl?: string;
+    shortUrl?: string;
+    expirationDate?: Date;
+  }): void {
+    if (props.originalUrl !== undefined) {
+      this.originalUrl = OriginalLink.fromInput(props.originalUrl);
+    }
+    if (props.shortUrl !== undefined) {
+      this.shortUrl = ShortLink.fromInput(props.shortUrl);
+    }
+    if (props.expirationDate !== undefined) {
+      this.expirationDate = props.expirationDate;
+    }
+    this.updatedAt = new Date();
   }
 }
