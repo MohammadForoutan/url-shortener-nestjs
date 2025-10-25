@@ -13,8 +13,10 @@ import {
   VerifyEmailUseCase,
 } from '@app/application/url-shortener/usecases';
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 
 import { EmailModule } from '../email';
+import { GlobalExceptionFilter } from '../exceptions/exception.filter';
 import { JwtModule } from '../hash/jwt/jwt.module';
 import { AppV1Controller } from './v1/app.controller';
 import { AuthV1Controller } from './v1/auth.controller';
@@ -46,6 +48,12 @@ import { UserV1Controller } from './v1/user.controller';
     RedirectUrlUseCase,
     ListUserUrlsUseCase,
     UpdateUrlUseCase,
+
+    // EXCEPTION FILTER
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
   ],
 })
 export class HttpModule {}
