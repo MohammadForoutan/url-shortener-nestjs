@@ -1,6 +1,6 @@
 import { Pagination } from '@app/application/common';
 import { Url } from '@app/domain/url-shortener/url';
-import { ApiPaginationOptions, PaginatedList } from '@app/infra/interfaces';
+import { ApiPaginationOptions } from '@app/infra/interfaces';
 import { Injectable } from '@nestjs/common';
 
 import { UrlRepository } from '../ports/url.repository';

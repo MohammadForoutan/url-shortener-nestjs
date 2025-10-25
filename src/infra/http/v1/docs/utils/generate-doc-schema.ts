@@ -1,6 +1,6 @@
 import type {
   NotUndefined,
-  PaginatedList,
+  PaginationResponse,
   ResponseFormat,
 } from '../../../../interfaces';
 
@@ -21,7 +21,7 @@ export const generateDocSchemaPaginatedList = <T>({
   data,
 }: {
   data: NotUndefined<T>;
-}): ResponseFormat<PaginatedList<T>> => {
+}): ResponseFormat<PaginationResponse<T>> => {
   return {
     data: {
       items: Array(10).fill(data),

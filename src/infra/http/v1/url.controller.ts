@@ -10,7 +10,7 @@ import { ListUserUrlsUseCase } from '@app/application/url-shortener/usecases/lis
 import { UpdateUrlUseCase } from '@app/application/url-shortener/usecases/update-url.usecase';
 import { GetJwtPayload } from '@app/infra/decorators';
 import { AuthJwtGuard } from '@app/infra/guards';
-import { PaginatedList, ResponseFormat } from '@app/infra/interfaces';
+import { PaginationResponse, ResponseFormat } from '@app/infra/interfaces';
 import {
   Body,
   Controller,
@@ -124,7 +124,7 @@ export class UrlV1Controller {
   async listUserUrls(
     @Query() query: QueryUrlListDto,
     @GetJwtPayload() payload: JwtPayload,
-  ): Promise<ResponseFormat<PaginatedList<UrlReadModel>>> {
+  ): Promise<ResponseFormat<PaginationResponse<UrlReadModel>>> {
     const response = await this.listUserUrlsUseCase.execute({
       ownerId: payload.userId,
       pagination: query,

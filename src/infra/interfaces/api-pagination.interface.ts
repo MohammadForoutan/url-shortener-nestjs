@@ -3,7 +3,7 @@ export interface ApiPaginationOptions {
   limit: number;
 }
 
-export interface PaginatedList<T = any> {
+export interface PaginationResponse<T = any> {
   items: T[];
   total: number;
   page: number;

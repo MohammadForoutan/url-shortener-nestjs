@@ -7,7 +7,7 @@
 - [x] value object pattern for user and url
 - [x] user urls list - pagination
 - [x] add expiration date to url
-- [ ] update url - (short url, original url, expiration date)
+- [x] update url - (short url, original url, expiration date)
 - [ ] rate limiting - ip address
 - [ ] exception handling - filter interceptor nestjs
 - [ ] check domain and logic with khalvai
