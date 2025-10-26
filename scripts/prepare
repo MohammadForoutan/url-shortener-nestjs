@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 
-[ -d .git/ ] && pnpm exec husky configs/husky
+# [ -d .git/ ] && pnpm exec husky configs/husky
+echo "THIS IS A TEST"
 exit 0

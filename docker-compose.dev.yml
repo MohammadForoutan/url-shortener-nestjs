@@ -1,0 +1,96 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: url_shortener_app_dev
+    env_file:
+      - ./.env
+    ports:
+      - '${PORT:-3000}:${PORT:-3000}'
+    environment:
+      # Application Configuration
+      - NODE_ENV=development
+      - PORT=${PORT}
+      - HOST=0.0.0.0
+
+      # Database Configuration (using service name for Docker networking)
+      - POSTGRES_DB_HOST=postgres
+      - POSTGRES_DB_PORT=${POSTGRES_DB_PORT:-5432}
+      - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME}
+      - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD}
+      - POSTGRES_DB_DATABASE=${POSTGRES_DB_DATABASE}
+      - POSTGRES_DB_SCHEMA=${POSTGRES_DB_SCHEMA}
+
+      # Redis Configuration (using service name for Docker networking)
+      - REDIS_HOST=redis
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_DB=${REDIS_DB}
+
+      # JWT Configuration
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - JWT_REFRESH_EXPIRES_IN=${JWT_REFRESH_EXPIRES_IN}
+
+      # Application URLs
+      - APP_URL=${APP_URL}
+      - FRONTEND_URL=${FRONTEND_URL}
+
+      # CORS Configuration
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - CORS_MAX_AGE=${CORS_MAX_AGE}
+      - CORS_METHODS=${CORS_METHODS}
+      - CORS_ALLOWED_HEADERS=${CORS_ALLOWED_HEADERS}
+
+      # Logging
+      - LOG_LEVEL=${LOG_LEVEL}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - url_shortener_network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:18-alpine3.22
+    container_name: url_shortener_postgres_dev
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: ${POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB_DATABASE}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    networks:
+      - url_shortener_network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: url_shortener_redis_dev
+    env_file:
+      - ./.env
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data_dev:/data
+    networks:
+      - url_shortener_network
+    restart: unless-stopped
+
+networks:
+  url_shortener_network:
+    driver: bridge
+
+volumes:
+  postgres_data_dev:
+  redis_data_dev:

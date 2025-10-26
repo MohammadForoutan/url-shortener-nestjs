@@ -1,10 +1,15 @@
+import dotenv from 'dotenv';
 import * as envVar from 'env-var';
+import path from 'node:path';
 import process from 'node:process';
 
 import { LogLevel } from '../logger/log.constant';
 
+dotenv.config({ path: path.join(process.cwd(), '.env') });
+
 // eslint-disable-next-line n/no-process-env
 const env = envVar.from(process.env);
+
 export const envConfig = {
   // APPLICATION CONFIGURATION
   APP_URL: env.get('APP_URL').required().asString(),
