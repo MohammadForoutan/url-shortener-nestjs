@@ -15,7 +15,7 @@ import {
 import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 
-import { EmailModule } from '../email';
+import { AdaptorModule } from '../adaptors';
 import { GlobalExceptionFilter } from '../exceptions/exception.filter';
 import { JwtModule } from '../hash/jwt/jwt.module';
 import { AppV1Controller } from './v1/app.controller';
@@ -24,7 +24,7 @@ import { UrlV1Controller } from './v1/url.controller';
 import { UserV1Controller } from './v1/user.controller';
 
 @Module({
-  imports: [JwtModule, EmailModule],
+  imports: [JwtModule, AdaptorModule],
   controllers: [
     AppV1Controller,
     UserV1Controller,

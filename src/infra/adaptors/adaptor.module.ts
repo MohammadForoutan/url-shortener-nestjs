@@ -1,4 +1,4 @@
-import { EmailService } from '@app/application/url-shortener/ports/email.service';
+import { EmailService } from '@app/application/url-shortener/ports';
 import { Module } from '@nestjs/common';
 
 import { EmailServiceImp } from './email.service';
@@ -13,4 +13,4 @@ import { EmailServiceImp } from './email.service';
   ],
   exports: [EmailService],
 })
-export class EmailModule {}
+export class AdaptorModule {}
