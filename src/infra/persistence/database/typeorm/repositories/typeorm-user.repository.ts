@@ -1,5 +1,5 @@
-import { UserRepository } from '@app/application/url-shortener/ports/user.repository';
-import { User } from '@app/domain/url-shortener/user';
+import { UserRepository } from '@app/application/ports/user.repository';
+import { User } from '@app/domain/user/entities';
 import { Injectable } from '@nestjs/common';
 import { MoreThan } from 'typeorm';
 

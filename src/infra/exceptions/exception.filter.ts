@@ -1,8 +1,7 @@
+import type { ResponseFormat } from '@app/application/common';
 import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 
 import { HttpException, HttpStatus } from '@nestjs/common';
-
-import type { ResponseFormat } from '../interfaces';
 
 interface HttpExceptionResponse {
   message: string | string[];

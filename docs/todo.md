@@ -11,6 +11,7 @@
 - [ ] rate limiting - ip address
 - [x] exception handling - filter interceptor nestjs
 - [ ] check domain and logic with khalvai
+- [ ] implement query and command pattern
 
 ---
 

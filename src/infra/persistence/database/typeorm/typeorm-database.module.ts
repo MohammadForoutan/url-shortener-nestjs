@@ -1,5 +1,5 @@
-import { UrlRepository } from '@app/application/url-shortener/ports/url.repository';
-import { UserRepository } from '@app/application/url-shortener/ports/user.repository';
+import { UrlRepository } from '@app/application/ports/url.repository';
+import { UserRepository } from '@app/application/ports/user.repository';
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 

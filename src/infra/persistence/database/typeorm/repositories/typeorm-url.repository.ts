@@ -1,6 +1,6 @@
 import { Pagination } from '@app/application/common';
-import { UrlRepository } from '@app/application/url-shortener/ports/url.repository';
-import { Url } from '@app/domain/url-shortener/url';
+import { UrlRepository } from '@app/application/ports/url.repository';
+import { Url } from '@app/domain/url/entities';
 import { Injectable } from '@nestjs/common';
 
 import { UrlEntity } from '../entities/url.entity';

@@ -1,8 +1,5 @@
-import { Url } from '@app/domain/url-shortener/url';
-import {
-  OriginalLink,
-  ShortLink,
-} from '@app/domain/url-shortener/value-objects';
+import { Url } from '@app/domain/url/entities';
+import { OriginalLink, ShortLink } from '@app/domain/url/value-objects';
 
 import type { UrlEntity } from '../entities/url.entity';
 

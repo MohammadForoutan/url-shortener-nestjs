@@ -1,10 +1,7 @@
+import type { JwtPayload } from '@app/application/ports';
+
 import { Injectable } from '@nestjs/common';
 import { JwtService as NestJwtService } from '@nestjs/jwt';
-
-export interface JwtPayload {
-  userId: string;
-  email: string;
-}
 
 @Injectable()
 export class JwtServiceImp {

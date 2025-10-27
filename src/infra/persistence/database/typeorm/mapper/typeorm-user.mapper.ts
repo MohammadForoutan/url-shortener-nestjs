@@ -1,5 +1,5 @@
-import { User } from '@app/domain/url-shortener/user';
-import { Password } from '@app/domain/url-shortener/value-objects';
+import { User } from '@app/domain/user/entities';
+import { Password } from '@app/domain/user/value-objects';
 
 import type { UserEntity as TypeormUserEntity } from '../entities/user.entity';
 

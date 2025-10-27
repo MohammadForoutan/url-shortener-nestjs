@@ -1,0 +1,14 @@
+import type { User } from '@app/domain/user/entities';
+
+export abstract class UserRepository {
+  abstract create: (user: User) => Promise<User>;
+  abstract findByEmail: (email: string) => Promise<User | null>;
+  abstract findById: (userId: string) => Promise<User | null>;
+  abstract findByPasswordResetToken: (
+    passwordResetToken: string,
+  ) => Promise<User | null>;
+  abstract findByVerificationToken: (
+    verificationToken: string,
+  ) => Promise<User | null>;
+  abstract update: (user: User) => Promise<User>;
+}
