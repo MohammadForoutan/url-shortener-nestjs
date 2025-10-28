@@ -1,8 +1,6 @@
-import { JwtServicePort } from '@app/application/ports';
 import { Module } from '@nestjs/common';
 import { JwtModule as NestJwtModule } from '@nestjs/jwt';
 
-import { JwtServiceImp } from '../../adaptors/jwt.service';
 import { envConfig } from '../../env';
 
 @Module({

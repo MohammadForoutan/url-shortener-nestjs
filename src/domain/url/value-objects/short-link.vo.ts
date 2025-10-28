@@ -16,7 +16,7 @@ export class ShortLink extends ValueObject<string> {
       isCustomShortLink &&
       customShortLink.length > ShortLink.maxCustomLength
     ) {
-      throw new BadRequestException('Custom short kubj is too long');
+      throw new BadRequestException('Custom short is too long');
     }
 
     // if custom short link is provided, slugify it

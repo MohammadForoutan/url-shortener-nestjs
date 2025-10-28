@@ -1,7 +1,3 @@
-export type PaginatedRecord<FieldName, FieldType> = FieldName extends string
-  ? Record<FieldName, FieldType[]> & { totalPages: number }
-  : never;
-
 export class Pagination<FieldType> {
   public readonly models: FieldType[];
   public readonly nextPage: number;

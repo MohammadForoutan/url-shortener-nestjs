@@ -2,7 +2,6 @@ import { HashService, JwtServicePort } from '@app/application/ports';
 // TODO: implement port for environment variables
 import { envConfig } from '@app/infra';
 import {
-  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
