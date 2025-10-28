@@ -12,13 +12,14 @@
 - [x] exception handling - filter interceptor nestjs
 - [ ] check domain and logic with khalvai
 - [ ] implement query and command pattern
+- [ ] ask ai to find problems in source code (harsh mode)
 
 ---
 
 # CI / CD Pipeline and Testing
 
 - [ ] ci / cd pipeline - fullstacksjs(check repository)
-- [ ] dockerize the project
+- [x] dockerize the project
 - [ ] github actions to test and lint the project
 - [ ] unittest coverage report
 - [ ] e2e tests
@@ -26,10 +27,10 @@
 
 # URL Shortener
 
-- [ ] url and user - filter, sort
-- [ ] create url, get urls, redirect to original url, get analytics
+- [ ] url and user - filter, sort ((CURRENT))
+- [x] create url, get urls, redirect to original url
 - [ ] url expiration
 - [ ] url logs, clicks, tracking
-- [ ] custom link generation
+- [x] custom link generation
 - [ ] metrics and monitoring for urls (ip, geolocation, time, device, browser,
       os, country, city, etc.)
