@@ -1,4 +1,3 @@
-import { ResponseFormat } from '@app/application/common';
 import {
   ForgotPasswordUseCase,
   LoginUserUseCase,
@@ -7,6 +6,7 @@ import {
   ResetPasswordUseCase,
   VerifyEmailUseCase,
 } from '@app/application/usecases/user';
+import { ResponseFormat } from '@app/infra/api';
 import {
   Body,
   Controller,

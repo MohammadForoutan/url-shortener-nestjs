@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 
 interface ListUserUrlsCommand {
   ownerId: string;
-  pagination: Pagination;
+  pagination: Pagination<void>;
 }
 
 interface ListUserUrlsResponse {
@@ -20,7 +20,6 @@ export class ListUserUrlsUseCase {
       input.ownerId,
       input.pagination,
     );
-    console.log({ urls });
 
     return { urls };
   }

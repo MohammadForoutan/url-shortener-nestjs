@@ -1,7 +1,7 @@
 import type { JwtPayload } from '@app/application/ports';
 
-import { PaginationResponse, ResponseFormat } from '@app/application/common';
-import { UrlReadModel } from '@app/application/read-models/url.read-model';
+import { Pagination } from '@app/application/common';
+import { UrlReadModel } from '@app/application/read-models';
 import {
   GenerateCustomUrlUseCase,
   GenerateRandomUrlUseCase,
@@ -24,6 +24,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { PaginationResponse, ResponseFormat } from '../../pagination';
 import {
   GenerateCustomUrlDoc,
   GenerateRandomUrlDoc,
@@ -125,9 +126,10 @@ export class UrlV1Controller {
     @Query() query: QueryUrlListDto,
     @GetJwtPayload() payload: JwtPayload,
   ): Promise<ResponseFormat<PaginationResponse<UrlReadModel>>> {
+    const pagination = Pagination.for(query.page, query.limit);
     const response = await this.listUserUrlsUseCase.execute({
       ownerId: payload.userId,
-      pagination: query,
+      pagination,
     });
 
     return {

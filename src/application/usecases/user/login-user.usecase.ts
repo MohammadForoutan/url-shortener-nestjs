@@ -2,6 +2,7 @@ import { HashService, JwtServicePort } from '@app/application/ports';
 // TODO: implement port for environment variables
 import { envConfig } from '@app/infra';
 import {
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -22,6 +23,7 @@ interface LoginUserResponse {
 export class LoginUserUseCase {
   constructor(
     private readonly userRepository: UserRepository,
+
     private readonly jwtService: JwtServicePort,
     private readonly hashService: HashService,
   ) {}

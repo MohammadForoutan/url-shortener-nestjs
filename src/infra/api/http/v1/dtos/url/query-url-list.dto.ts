@@ -1,4 +1,4 @@
-import { ApiPaginationOptions } from '@app/application/common';
+import { ApiPaginationOptions } from '@app/infra/api';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNumber, IsOptional, Max, Min } from 'class-validator';

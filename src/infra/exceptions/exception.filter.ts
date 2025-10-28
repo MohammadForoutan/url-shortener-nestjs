@@ -1,4 +1,4 @@
-import type { ResponseFormat } from '@app/application/common';
+import type { ResponseFormat } from '@app/infra/api';
 import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 
 import { HttpException, HttpStatus } from '@nestjs/common';

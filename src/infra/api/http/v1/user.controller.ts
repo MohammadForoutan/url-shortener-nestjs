@@ -1,8 +1,8 @@
 import type { JwtPayload } from '@app/application/ports';
 
-import { ResponseFormat } from '@app/application/common';
 import { UserReadModel } from '@app/application/read-models';
 import { GetCurrentLoginUserUseCase } from '@app/application/usecases/user';
+import { ResponseFormat } from '@app/infra/api';
 import { GetJwtPayload } from '@app/infra/decorators';
 import { AuthJwtGuard } from '@app/infra/guards';
 import { Controller, Get, HttpStatus, UseGuards } from '@nestjs/common';

@@ -3,8 +3,8 @@ import type { UserReadModel } from '@app/application/read-models';
 import { applyDecorators } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-import { generateDocSchema } from './utils';
-import { mockReadModels } from './utils/mock-read-models';
+import { generateDocSchema } from '../../utils';
+import { mockReadModels } from '../../utils/mock-read-models';
 
 export const GetMeDoc = () =>
   applyDecorators(

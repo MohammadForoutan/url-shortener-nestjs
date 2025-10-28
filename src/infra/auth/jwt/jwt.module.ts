@@ -1,8 +1,9 @@
+import { JwtServicePort } from '@app/application/ports';
 import { Module } from '@nestjs/common';
 import { JwtModule as NestJwtModule } from '@nestjs/jwt';
 
+import { JwtServiceImp } from '../../adaptors/jwt.service';
 import { envConfig } from '../../env';
-import { JwtServiceImp } from './jwt.service';
 
 @Module({
   imports: [
@@ -12,7 +13,5 @@ import { JwtServiceImp } from './jwt.service';
       signOptions: { expiresIn: envConfig.JWT_EXPIRES_IN },
     }),
   ],
-  providers: [JwtServiceImp],
-  exports: [JwtServiceImp],
 })
 export class JwtModule {}

@@ -17,7 +17,7 @@ import {
 import { Module } from '@nestjs/common';
 
 import { AdaptorModule } from '../../adaptors';
-import { JwtModule } from '../../hash/jwt/jwt.module';
+import { JwtModule } from '../../auth/jwt/jwt.module';
 import { AppV1Controller } from './v1/app.controller';
 import { AuthV1Controller } from './v1/auth.controller';
 import { UrlV1Controller } from './v1/url.controller';
@@ -33,14 +33,13 @@ import { UserV1Controller } from './v1/user.controller';
   ],
   // use cases providers
   providers: [
-    // AUTH
+    // USER
     RegisterUserUseCase,
     LoginUserUseCase,
     VerifyEmailUseCase,
     ResendVerificationEmailUseCase,
     ForgotPasswordUseCase,
     ResetPasswordUseCase,
-    // USER
     GetCurrentLoginUserUseCase,
     // URL
     GenerateRandomUrlUseCase,

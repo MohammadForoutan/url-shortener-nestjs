@@ -1,4 +1,4 @@
-import { ResponseFormat } from '@app/application/common';
+import { ResponseFormat } from '@app/infra/api';
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 
 import { EmailService, UserRepository } from '../../ports';

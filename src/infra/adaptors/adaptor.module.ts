@@ -1,8 +1,13 @@
-import { EmailService, HashService } from '@app/application/ports';
+import {
+  EmailService,
+  HashService,
+  JwtServicePort,
+} from '@app/application/ports';
 import { Module } from '@nestjs/common';
 
 import { EmailServiceImp } from './email.service';
 import { HashServiceImp } from './hash.service';
+import { JwtServiceImp } from './jwt.service';
 
 @Module({
   imports: [],
@@ -15,7 +20,11 @@ import { HashServiceImp } from './hash.service';
       provide: EmailService,
       useClass: EmailServiceImp,
     },
+    {
+      provide: JwtServicePort,
+      useClass: JwtServiceImp,
+    },
   ],
-  exports: [EmailService, HashService],
+  exports: [EmailService, HashService, JwtServicePort],
 })
 export class AdaptorModule {}

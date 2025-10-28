@@ -3,8 +3,8 @@ import type { UrlReadModel } from '@app/application/read-models';
 import { applyDecorators } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-import { generateDocSchema, generateDocSchemaPaginatedList } from './utils';
-import { mockReadModels } from './utils/mock-read-models';
+import { generateDocSchema, generateDocSchemaPaginatedList } from '../../utils';
+import { mockReadModels } from '../../utils/mock-read-models';
 
 export const GenerateRandomUrlDoc = () =>
   applyDecorators(

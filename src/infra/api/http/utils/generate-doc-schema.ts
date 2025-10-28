@@ -2,7 +2,7 @@ import type {
   NotUndefined,
   PaginationResponse,
   ResponseFormat,
-} from '@app/application/common';
+} from '@app/infra/api';
 
 export const generateDocSchema = <T>({
   data,

@@ -1,4 +1,4 @@
-import { HttpModule } from '@app/infra/api/http/http.module';
+import { HttpModule } from '@app/infra/api';
 import { Module } from '@nestjs/common';
 
 @Module({

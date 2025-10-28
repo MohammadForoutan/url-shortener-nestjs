@@ -8,3 +8,15 @@ export interface ResponseFormat<T = unknown> {
   success: boolean;
   message?: string | string[];
 }
+
+export interface PaginationResponse<T = unknown> {
+  items: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  nextPage: number | null;
+  previousPage: number | null;
+}
