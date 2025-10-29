@@ -35,6 +35,3 @@ jobs:
 
       - name: Run Docker Compose (Production)
         run: docker compose -f docker-compose.prod.yml up -d
-
-      - name: Run Docker Compose (Development)
-        run: docker compose -f docker-compose.dev.yml up -d
