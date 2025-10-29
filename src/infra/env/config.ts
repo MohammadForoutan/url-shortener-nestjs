@@ -16,7 +16,7 @@ export const envConfig = {
   NODE_ENV: env
     .get('NODE_ENV')
     .required()
-    .asEnum(['development', 'production', 'tess']),
+    .asEnum(['development', 'production', 'test']),
   PORT: env.get('PORT').required().asPortNumber(),
   HOST: env.get('HOST').required().asString(),
 

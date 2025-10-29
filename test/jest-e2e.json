@@ -5,5 +5,33 @@
   "testRegex": ".e2e-spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "^@app/core/(.*)$": "<rootDir>/../src/core/$1",
+    "^@app/core$": "<rootDir>/../src/core",
+    "^@app/application/(.*)$": "<rootDir>/../src/application/$1",
+    "^@app/application$": "<rootDir>/../src/application",
+    "^@app/domain/(.*)$": "<rootDir>/../src/domain/$1",
+    "^@app/domain$": "<rootDir>/../src/domain",
+    "^@app/infra/(.*)$": "<rootDir>/../src/infra/$1",
+    "^@app/infra$": "<rootDir>/../src/infra"
+  },
+  "setupFiles": ["dotenv/config"],
+  "globals": {
+    "ts-jest": {
+      "tsconfig": {
+        "baseUrl": ".",
+        "paths": {
+          "@app/core/*": ["src/core/*"],
+          "@app/core": ["src/core"],
+          "@app/application/*": ["src/application/*"],
+          "@app/application": ["src/application"],
+          "@app/domain/*": ["src/domain/*"],
+          "@app/domain": ["src/domain"],
+          "@app/infra/*": ["src/infra/*"],
+          "@app/infra": ["src/infra"]
+        }
+      }
+    }
   }
 }

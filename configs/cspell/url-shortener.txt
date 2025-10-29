@@ -8,6 +8,9 @@ nodenext
 redispass
 requirepass
 slugified
+swcrc
+unplugin
 Usecase
 usecases
 uuidv
+vitest
