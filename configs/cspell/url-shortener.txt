@@ -7,3 +7,5 @@ slugified
 Usecase
 usecases
 uuidv
+redispass
+changeme

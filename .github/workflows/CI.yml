@@ -22,7 +22,7 @@ jobs:
           cache: 'pnpm'
       - name: install dependencies
         run: pnpm install
-      - name: run verify (lint, spell)
+      - name: run verify (lint, format, spell)
         run: pnpm run verify
 
   build:
@@ -30,5 +30,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run Docker container
+      - name: Set up Docker Compose
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run Docker Compose (Production)
         run: docker compose -f docker-compose.prod.yml up -d
+
+      - name: Run Docker Compose (Development)
+        run: docker compose -f docker-compose.dev.yml up -d
