@@ -4,7 +4,7 @@ import type { App } from 'supertest/types';
 
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { AppModule } from '../src/app.module';
 
@@ -20,14 +20,14 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  test('/api/v1/app (GET)', () => {
+  it('/api/v1/app (GET)', () => {
     return request(app.getHttpServer())
       .get('/app')
       .expect(200)
       .expect('Hello World!');
   });
 
-  test('/api/v1/app/health (GET)', async () => {
+  it('/api/v1/app/health (GET)', async () => {
     const response = await request(app.getHttpServer())
       .get('/app/health')
       .expect(200);

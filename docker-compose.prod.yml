@@ -9,42 +9,42 @@ services:
       - '${PORT:-3000}:${PORT:-3000}'
     environment:
       # Application Configuration
-      - NODE_ENV=${NODE_ENV:-production}
-      - PORT=${PORT:-3000}
-      - HOST=0.0.0.0
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - HOST=${HOST}
 
       # Database Configuration (using service name for Docker networking)
       - POSTGRES_DB_HOST=postgres
-      - POSTGRES_DB_PORT=${POSTGRES_DB_PORT:-5432}
-      - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME:-postgres}
-      - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD:-postgres}
-      - POSTGRES_DB_DATABASE=${POSTGRES_DB_DATABASE:-url_shortener}
-      - POSTGRES_DB_SCHEMA=${POSTGRES_DB_SCHEMA:-public}
+      - POSTGRES_DB_PORT=${POSTGRES_DB_PORT}
+      - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME}
+      - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD}
+      - POSTGRES_DB_DATABASE=${POSTGRES_DB_DATABASE}
+      - POSTGRES_DB_SCHEMA=${POSTGRES_DB_SCHEMA}
 
       # Redis Configuration (using service name for Docker networking)
       - REDIS_HOST=redis
-      - REDIS_PORT=${REDIS_PORT:-6379}
-      - REDIS_PASSWORD=${REDIS_PASSWORD:-redispass}
-      - REDIS_DB=${REDIS_DB:-0}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_DB=${REDIS_DB}
 
       # JWT Configuration
-      - JWT_SECRET=${JWT_SECRET:-changeme}
-      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-86400000}
-      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-changeme_refresh}
-      - JWT_REFRESH_EXPIRES_IN=${JWT_REFRESH_EXPIRES_IN:-86400000}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - JWT_REFRESH_EXPIRES_IN=${JWT_REFRESH_EXPIRES_IN}
 
       # Application URLs
-      - APP_URL=${APP_URL:-http://localhost:3000}
-      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:5173}
+      - APP_URL=${APP_URL}
+      - FRONTEND_URL=${FRONTEND_URL}
 
       # CORS Configuration
-      - CORS_ORIGINS=${CORS_ORIGINS:-*}
-      - CORS_MAX_AGE=${CORS_MAX_AGE:-600}
-      - CORS_METHODS=${CORS_METHODS:-GET,POST,PUT,PATCH,DELETE,OPTIONS}
-      - CORS_ALLOWED_HEADERS=${CORS_ALLOWED_HEADERS:-Content-Type,Authorization}
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - CORS_MAX_AGE=${CORS_MAX_AGE}
+      - CORS_METHODS=${CORS_METHODS}
+      - CORS_ALLOWED_HEADERS=${CORS_ALLOWED_HEADERS}
 
       # Logging
-      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_LEVEL=${LOG_LEVEL}
     depends_on:
       - postgres
       - redis
@@ -61,11 +61,11 @@ services:
     image: postgres:18-alpine3.22
     container_name: url_shortener_postgres_prod
     environment:
-      POSTGRES_USER: ${POSTGRES_DB_USERNAME:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB_DATABASE:-url_shortener}
+      POSTGRES_USER: ${POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB_DATABASE}
     ports:
-      - '${POSTGRES_DB_PORT:-5432}:5432'
+      - '${POSTGRES_DB_PORT}:5432'
     volumes:
       - postgres_data_prod:/var/lib/postgresql/data
     networks:
@@ -76,8 +76,8 @@ services:
     image: redis:7-alpine
     container_name: url_shortener_redis_prod
     ports:
-      - '${REDIS_PORT:-6379}:6379'
-    command: redis-server --requirepass ${REDIS_PASSWORD:-redispass}
+      - '${REDIS_PORT}:6379'
+    command: redis-server --requirepass ${REDIS_PASSWORD}
     volumes:
       - redis_data_prod:/data
     networks:
