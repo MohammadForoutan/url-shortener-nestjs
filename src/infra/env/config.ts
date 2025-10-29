@@ -1,3 +1,4 @@
+/* eslint-disable n/no-process-env */
 import dotenv from 'dotenv';
 import * as envVar from 'env-var';
 import path from 'node:path';
@@ -5,14 +6,47 @@ import process from 'node:process';
 
 import { LogLevel } from '../logger/log.constant';
 
-dotenv.config({ path: path.join(process.cwd(), '.env') });
-
-// eslint-disable-next-line n/no-process-env
-const env = envVar.from(process.env);
+let env;
+if (process.env.NODE_ENV !== 'development') {
+  env = envVar.from(process.env);
+} else {
+  dotenv.config({ path: path.join(process.cwd(), '.env') });
+  env = envVar.from({
+    // Application Configuration
+    APP_URL: process.env.APP_URL,
+    NODE_ENV: process.env.NODE_ENV,
+    PORT: process.env.PORT,
+    HOST: process.env.HOST,
+    LOG_LEVEL: process.env.LOG_LEVEL,
+    // Database Configuration
+    POSTGRES_DB_HOST: process.env.POSTGRES_DB_HOST,
+    POSTGRES_DB_PORT: process.env.POSTGRES_DB_PORT,
+    POSTGRES_DB_USERNAME: process.env.POSTGRES_DB_USERNAME,
+    POSTGRES_DB_PASSWORD: process.env.POSTGRES_DB_PASSWORD,
+    POSTGRES_DB_DATABASE: process.env.POSTGRES_DB_DATABASE,
+    POSTGRES_DB_SCHEMA: process.env.POSTGRES_DB_SCHEMA,
+    // JWT Configuration
+    JWT_SECRET: process.env.JWT_SECRET,
+    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
+    JWT_REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN,
+    // Redis Configuration
+    REDIS_HOST: process.env.REDIS_HOST,
+    REDIS_PORT: process.env.REDIS_PORT,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+    REDIS_DB: process.env.REDIS_DB,
+    // Cors Configuration
+    CORS_ORIGINS: process.env.CORS_ORIGINS,
+    CORS_MAX_AGE: process.env.CORS_MAX_AGE,
+    CORS_METHODS: process.env.CORS_METHODS,
+    CORS_ALLOWED_HEADERS: process.env.CORS_ALLOWED_HEADERS,
+  });
+}
 
 export const envConfig = {
   // APPLICATION CONFIGURATION
-  APP_URL: env.get('APP_URL').required().asString(),
+  // APP_URL: env.get('APP_URL').required().asString(),
+  APP_URL: process.env.APP_URL,
   NODE_ENV: env
     .get('NODE_ENV')
     .required()

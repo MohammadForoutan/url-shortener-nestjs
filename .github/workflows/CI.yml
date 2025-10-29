@@ -68,7 +68,7 @@ jobs:
     env:
       # Application Configuration
       APP_URL: ${{ secrets.APP_URL }}
-      NODE_ENV: ${{ secrets.NODE_ENV }}
+      NODE_ENV: production
       PORT: ${{ secrets.PORT }}
       HOST: ${{ secrets.HOST }}
       LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
