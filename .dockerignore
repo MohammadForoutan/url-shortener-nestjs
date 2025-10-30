@@ -50,9 +50,9 @@ docs/
 *.md
 
 # Test files
-test/
-*.spec.ts
-*.test.ts
+# test/
+# *.spec.ts
+# *.test.ts
 
 # Logs
 logs/
