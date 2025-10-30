@@ -27,7 +27,7 @@
     "test:e2e:ci": "vitest run --config ./vitest.e2e-config.ts",
     "prepare": "./scripts/prepare",
     "spell": "./scripts/spell",
-    "verify": "pnpm run lint:ci && pnpm run format:ci && pnpm run spell",
+    "verify": "pnpm run lint:ci && pnpm run format:ci && pnpm run spell && pnpm run test:ci",
     "local:ci": "act -P ubuntu-latest=catthehacker/ubuntu:act-22.04"
   },
   "pnpm": {

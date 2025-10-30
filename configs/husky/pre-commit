@@ -2,3 +2,4 @@
 # . "$(dirname -- "$0")/_/husky.sh"
 
 HUSKEY=1 pnpm exec lint-staged
+pnpm run verify
