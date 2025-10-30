@@ -2,3 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 HUSKEY=1 pnpm run verify
+pnpm run start:dev&
+# delay for 10 seconds to let the server start
+sleep 10
+pnpm run orval

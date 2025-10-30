@@ -2,4 +2,9 @@
 # . "$(dirname -- "$0")/_/husky.sh"
 
 HUSKEY=1 pnpm exec lint-staged
+pnpm run start:dev&
+# delay for 10 seconds to let the server start
+sleep 10
+pnpm run orval
+
 pnpm run verify
