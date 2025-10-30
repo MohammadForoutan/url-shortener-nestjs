@@ -52,7 +52,7 @@ services:
       - url_shortener_network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/v1/app/health || exit 1"]
+      test: ["CMD", "curl", "-f", "http://${HOST}:${PORT}/api/v1/app/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -44,6 +44,9 @@ importers:
       class-validator:
         specifier: 0.14.2
         version: 0.14.2
+      dotenv:
+        specifier: 17.2.3
+        version: 17.2.3
       env-var:
         specifier: 7.5.0
         version: 7.5.0
@@ -117,9 +120,6 @@ importers:
       cspell:
         specifier: ^9.2.1
         version: 9.2.1
-      dotenv:
-        specifier: 17.2.3
-        version: 17.2.3
       eslint:
         specifier: ^9.18.0
         version: 9.37.0(jiti@2.6.1)

@@ -10,6 +10,7 @@ requirepass
 slugified
 swcrc
 unplugin
+unrs
 Usecase
 usecases
 uuidv

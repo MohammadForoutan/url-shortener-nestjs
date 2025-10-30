@@ -1,42 +1,59 @@
-ARG IMAGE_BUILDER=node:24-bookworm
-ARG IMAGE_PROD=node:24-bookworm
-ARG NODE_ENV=production
-
-# Build stage
+# ==== Build Stage ====
+ARG IMAGE_BUILDER=node:24-bookworm-slim
 FROM ${IMAGE_BUILDER} AS builder
+
+# Use non-root user early (optional, but secure)
+# RUN useradd -m appUser
+# USER appUser
 
 WORKDIR /app
 
-# Copy dependency files
+# Install pnpm globally (once)
+RUN npm install -g pnpm@10.17.0
+
+# Copy only dependency manifests
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY scripts/ ./scripts/
 
-# Install pnpm and dependencies (including dev dependencies for build)
-RUN npm install -g pnpm && \
-    pnpm install
+# Install ALL dependencies (dev + prod) for build
+RUN pnpm install --frozen-lockfile
 
-# Copy remaining source files
+# Copy source code
 COPY . .
 
-# Build the application
+# Build the app
 RUN pnpm run build
 
-# Production stage
-FROM ${IMAGE_PROD} AS production
+# ==== Production Stage ====
+FROM node:24-bookworm-slim AS production
 
 WORKDIR /app
 
-ENV NODE_ENV=${NODE_ENV}
+# Install pnpm globally
+RUN npm install -g pnpm@10.17.0
 
-# Copy dependency files
+# Copy package files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Install pnpm and production dependencies only (ignore scripts for production)
-RUN npm install -g pnpm && \
-    pnpm install --prod --ignore-scripts
+# Install ONLY production dependencies
+RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 
-# Copy built application from builder stage
+# Copy built dist from builder
 COPY --from=builder /app/dist ./dist
 
-# Start the application
+# Optional: Copy any runtime config if needed
+# COPY config/ ./config/
+
+# Use non-root user (recommended for production)
+# RUN useradd -m appUser && chown -R appUser:appUser /app
+# USER appUser
+
+# Expose port (NestJS default)
+EXPOSE 3000
+
+# Healthcheck (optional but recommended)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/health || exit 1
+
+# Start app
 CMD ["pnpm", "run", "start:prod"]

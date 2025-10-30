@@ -30,6 +30,14 @@
     "verify": "pnpm run lint:ci && pnpm run format:ci && pnpm run spell",
     "local:ci": "act -P ubuntu-latest=catthehacker/ubuntu:act-22.04"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@scarf/scarf",
+      "argon2",
+      "unrs-resolver"
+    ]
+  },
   "dependencies": {
     "@nestjs/cache-manager": "3.0.1",
     "@nestjs/common": "^11.0.1",
@@ -43,6 +51,7 @@
     "cache-manager": "7.2.4",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.2",
+    "dotenv": "17.2.3",
     "env-var": "7.5.0",
     "nanoid": "5.1.6",
     "nestjs-pino": "4.4.1",
@@ -69,7 +78,6 @@
     "@types/supertest": "^6.0.2",
     "@vitest/coverage-v8": "4.0.4",
     "cspell": "^9.2.1",
-    "dotenv": "17.2.3",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",

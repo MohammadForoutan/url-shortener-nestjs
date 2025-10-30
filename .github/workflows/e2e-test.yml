@@ -1,0 +1,57 @@
+name: Test
+
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    branches: ['master']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # Application Configuration
+      APP_URL: ${{ secrets.APP_URL }}
+      NODE_ENV: production
+      PORT: ${{ secrets.PORT }}
+      HOST: ${{ secrets.HOST }}
+      LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
+      # JWT Configuration
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+      JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
+      JWT_REFRESH_EXPIRES_IN: ${{ secrets.JWT_REFRESH_EXPIRES_IN }}
+      # Postgres Database
+      POSTGRES_DB_HOST: ${{ secrets.POSTGRES_DB_HOST }}
+      POSTGRES_DB_PORT: ${{ secrets.POSTGRES_DB_PORT }}
+      POSTGRES_DB_USERNAME: ${{ secrets.POSTGRES_DB_USERNAME }}
+      POSTGRES_DB_PASSWORD: ${{ secrets.POSTGRES_DB_PASSWORD }}
+      POSTGRES_DB_DATABASE: ${{ secrets.POSTGRES_DB_DATABASE }}
+      POSTGRES_DB_SCHEMA: ${{ secrets.POSTGRES_DB_SCHEMA }}
+      # Redis
+      REDIS_HOST: ${{ secrets.REDIS_HOST }}
+      REDIS_PORT: ${{ secrets.REDIS_PORT }}
+      REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+      REDIS_DB: ${{ secrets.REDIS_DB }}
+      # Cors
+      CORS_ORIGINS: ${{ secrets.CORS_ORIGINS }}
+      CORS_MAX_AGE: ${{ secrets.CORS_MAX_AGE }}
+      CORS_METHODS: ${{ secrets.CORS_METHODS }}
+      CORS_ALLOWED_HEADERS: ${{ secrets.CORS_ALLOWED_HEADERS }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.10.0
+          cache: 'pnpm'
+      - name: install dependencies
+        run: pnpm install
+
+      - name: run e2e tests
+        run: pnpm run test:e2e:ci
