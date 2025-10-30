@@ -42,6 +42,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3
+      - name: Use e2e-specific .dockerignore for test image
+        run: |
+          cp .dockerignore .dockerignore.prod
+          cp .dockerignore-test .dockerignore
       - name: Run e2e tests with Docker Compose
         run: |
-          docker compose -f docker-compose.e2e.yml up -d
+          docker compose -f docker-compose.prod.yml -f docker-compose.e2e.yml build --no-cache test
+          docker compose -f docker-compose.prod.yml -f docker-compose.e2e.yml up --abort-on-container-exit --exit-code-from test

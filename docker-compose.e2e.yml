@@ -1,19 +1,4 @@
-version: "3.9"
-
 services:
-  app:
-    # Override a few runtime bits for container-to-container access
-    environment:
-      HOST: ${HOST}
-      PORT: ${PORT}
-    healthcheck:
-      # Use localhost inside the container for health
-      test: ["CMD", "curl", "-f", "http://${HOST}:${PORT}/api/v1/app/health || exit 1"]
-      interval: 5s
-      timeout: 5s
-      retries: 20
-      start_period: 10s
-
   test:
     build:
       context: .
@@ -21,12 +6,12 @@ services:
       target: builder
     container_name: url_shortener_e2e
     depends_on:
-      app:
-        condition: service_healthy
+      - postgres
+      - redis
     environment:
-      # Inherit same envs used by the app; APP_URL should target the app service
       NODE_ENV: test
-      APP_URL: ${APP_URL}
+      # Tests start the app inside this container
+      APP_URL: http://localhost:${PORT}
       PORT: ${PORT}
       HOST: ${HOST}
       LOG_LEVEL: ${LOG_LEVEL}
