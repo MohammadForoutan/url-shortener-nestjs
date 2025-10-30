@@ -47,4 +47,6 @@ jobs:
           cp .dockerignore .dockerignore.prod
           cp .dockerignore-test .dockerignore
       - name: Run e2e tests with Docker Compose
-        run: docker compose -f docker-compose.prod.yml -f docker-compose.e2e.yml up --build --no-cache --abort-on-container-exit --exit-code-from test
+        run:
+          docker compose -f docker-compose.prod.yml -f docker-compose.e2e.yml up
+          --build --abort-on-container-exit --exit-code-from test
