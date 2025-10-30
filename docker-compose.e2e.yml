@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  app:
+    # Override a few runtime bits for container-to-container access
+    environment:
+      HOST: ${HOST}
+      PORT: ${PORT}
+    healthcheck:
+      # Use localhost inside the container for health
+      test: ["CMD", "curl", "-f", "http://${HOST}:${PORT}/api/v1/app/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: url_shortener_e2e
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      # Inherit same envs used by the app; APP_URL should target the app service
+      NODE_ENV: test
+      APP_URL: ${APP_URL}
+      PORT: ${PORT}
+      HOST: ${HOST}
+      LOG_LEVEL: ${LOG_LEVEL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN}
+      POSTGRES_DB_HOST: postgres
+      POSTGRES_DB_PORT: ${POSTGRES_DB_PORT}
+      POSTGRES_DB_USERNAME: ${POSTGRES_DB_USERNAME}
+      POSTGRES_DB_PASSWORD: ${POSTGRES_DB_PASSWORD}
+      POSTGRES_DB_DATABASE: ${POSTGRES_DB_DATABASE}
+      POSTGRES_DB_SCHEMA: ${POSTGRES_DB_SCHEMA}
+      REDIS_HOST: redis
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_DB: ${REDIS_DB}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      CORS_MAX_AGE: ${CORS_MAX_AGE}
+      CORS_METHODS: ${CORS_METHODS}
+      CORS_ALLOWED_HEADERS: ${CORS_ALLOWED_HEADERS}
+    command: ["pnpm", "run", "test:e2e:ci"]
+    networks:
+      - url_shortener_network
