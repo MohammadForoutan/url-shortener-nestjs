@@ -27,6 +27,8 @@ export class UpdateUrlDto {
   @ApiProperty({
     description: 'The expiration date of the url',
     example: '2025-10-25',
+    nullable: true,
+    type: Date,
   })
-  expirationDate?: Date;
+  expirationDate: Date | null = null;
 }

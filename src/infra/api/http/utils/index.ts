@@ -1,1 +1,1 @@
-export * from './generate-doc-schema';
+export * from './generate-response-type';

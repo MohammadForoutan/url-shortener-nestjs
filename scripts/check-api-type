@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo "Checking API type..."
+# if there is "unknown" or  "{ [key: string]: unknown }" return error 1 with message "invalid api type"
+if grep -Rq "unknown" tmp/api.ts || grep -Rq "{ \[key: string\]: unknown }" tmp/api.ts; then
+# line number of the error
+    # Print matching lines with line numbers for both patterns
+    grep -n "unknown" tmp/api.ts | while read -r line; do
+      line_number=$(echo "$line" | awk -F: '{print $1}')
+      code_line=$(echo "$line" | cut -d: -f2-)
+      echo "Line $line_number: $code_line"
+    done
+
+  echo "--------------------------------"
+  echo "Invalid API type found in tmp/api.ts"
+  echo "Please remove all unknown and { [key: string]: unknown } types"
+  echo "--------------------------------"
+  exit 1
+fi

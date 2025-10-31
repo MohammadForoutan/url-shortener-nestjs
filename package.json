@@ -27,7 +27,7 @@
     "test:e2e:ci": "vitest run --config ./vitest.e2e-config.ts",
     "prepare": "./scripts/prepare",
     "spell": "./scripts/spell",
-    "orval": "orval --config orval.config.mjs",
+    "orval": "orval --config orval.config.mjs && ./scripts/check-api-type",
     "verify": "pnpm run lint:ci && pnpm run format:ci && pnpm run spell && pnpm run test:ci",
     "local:ci": "act -P ubuntu-latest=catthehacker/ubuntu:act-22.04"
   },

@@ -31,6 +31,7 @@ export class UrlReadModel {
     description: 'The expiration date of the url',
     example: '2021-01-01T00:00:00.000Z',
     nullable: true,
+    type: Date,
   })
   expirationDate: Date | null;
 

@@ -1,10 +1,8 @@
-import type { UserReadModel } from '@app/application/read-models';
+import { UserReadModel } from '@app/application/read-models';
+import { applyDecorators, HttpStatus } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
-import { applyDecorators } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
-
-import { generateDocSchema } from '../../utils';
-import { mockReadModels } from '../../utils/mock-read-models';
+import { generateResponseSchema } from '../../utils';
 
 export const GetMeDoc = () =>
   applyDecorators(
@@ -13,9 +11,10 @@ export const GetMeDoc = () =>
       summary: 'Get the current user',
       description: 'Get the current user',
     }),
-    ApiResponse({
-      status: 200,
+    generateResponseSchema({
+      model: UserReadModel,
       description: 'User found',
-      example: generateDocSchema<UserReadModel>({ data: mockReadModels.user }),
+      status: HttpStatus.OK,
+      success: true,
     }),
   );

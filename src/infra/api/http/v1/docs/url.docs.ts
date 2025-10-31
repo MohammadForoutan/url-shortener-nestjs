@@ -1,10 +1,8 @@
-import type { UrlReadModel } from '@app/application/read-models';
+import { UrlReadModel } from '@app/application/read-models';
+import { applyDecorators, HttpStatus } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
-import { applyDecorators } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
-
-import { generateDocSchema, generateDocSchemaPaginatedList } from '../../utils';
-import { mockReadModels } from '../../utils/mock-read-models';
+import { generateResponseSchema } from '../../utils';
 
 export const GenerateRandomUrlDoc = () =>
   applyDecorators(
@@ -13,10 +11,11 @@ export const GenerateRandomUrlDoc = () =>
       summary: 'Generate a random url',
       description: 'Generate a random url',
     }),
-    ApiResponse({
-      status: 201,
+    generateResponseSchema({
+      model: UrlReadModel,
       description: 'Random url generated successfully',
-      example: generateDocSchema<UrlReadModel>({ data: mockReadModels.url }),
+      status: HttpStatus.CREATED,
+      success: true,
     }),
   );
 
@@ -27,10 +26,11 @@ export const GenerateCustomUrlDoc = () =>
       summary: 'Generate a custom url',
       description: 'Generate a custom url',
     }),
-    ApiResponse({
-      status: 201,
+    generateResponseSchema({
+      model: UrlReadModel,
       description: 'Custom url generated successfully',
-      example: generateDocSchema<UrlReadModel>({ data: mockReadModels.url }),
+      status: HttpStatus.CREATED,
+      success: true,
     }),
   );
 
@@ -41,10 +41,12 @@ export const ListUserUrlsDoc = () =>
       summary: 'List user urls',
       description: 'List user urls',
     }),
-    ApiResponse({
-      status: 200,
+    generateResponseSchema({
+      model: UrlReadModel,
       description: 'User urls listed successfully',
-      example: generateDocSchemaPaginatedList({ data: mockReadModels.url }),
+      status: HttpStatus.OK,
+      success: true,
+      isPaginated: true,
     }),
   );
 
@@ -55,9 +57,10 @@ export const UpdateUrlDoc = () =>
       summary: 'Update a url',
       description: 'Update a url',
     }),
-    ApiResponse({
-      status: 200,
+    generateResponseSchema({
+      model: UrlReadModel,
       description: 'Url updated successfully',
-      example: generateDocSchema<UrlReadModel>({ data: mockReadModels.url }),
+      status: HttpStatus.OK,
+      success: true,
     }),
   );
