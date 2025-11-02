@@ -1,4 +1,31 @@
 services:
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: url_shortener_migrate_prod
+    environment:
+      # Application Configuration
+      - NODE_ENV=${NODE_ENV}
+
+      # Database Configuration (using service name for Docker networking)
+      - POSTGRES_DB_HOST=postgres
+      - POSTGRES_DB_PORT=${POSTGRES_DB_PORT}
+      - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME}
+      - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD}
+      - POSTGRES_DB_DATABASE=${POSTGRES_DB_DATABASE}
+      - POSTGRES_DB_SCHEMA=${POSTGRES_DB_SCHEMA}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - url_shortener_network
+    restart: "no"
+    command: ./scripts/run-migrations.sh
+    profiles:
+      - migrate
+
   app:
     build:
       context: .
@@ -45,8 +72,10 @@ services:
       # Logging
       - LOG_LEVEL=${LOG_LEVEL}
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - url_shortener_network
     restart: unless-stopped
@@ -55,7 +84,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    command: pnpm run start:prod
+    command: ./scripts/start-prod.sh
 
   postgres:
     image: postgres:18-alpine3.22
@@ -71,6 +100,11 @@ services:
     networks:
       - url_shortener_network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_DB_USERNAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine

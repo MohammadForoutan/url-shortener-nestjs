@@ -29,7 +29,13 @@
     "spell": "./scripts/spell",
     "orval": "orval --config orval.config.mjs && ./scripts/check-api-type",
     "verify": "pnpm run lint:ci && pnpm run format:ci && pnpm run spell && pnpm run test:ci",
-    "local:ci": "act -P ubuntu-latest=catthehacker/ubuntu:act-22.04"
+    "local:ci": "act -P ubuntu-latest=catthehacker/ubuntu:act-22.04",
+    "migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d src/infra/persistence/database/typeorm/data-source.ts",
+    "migration:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create",
+    "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/infra/persistence/database/typeorm/data-source.ts",
+    "migration:run:prod": "NODE_ENV=production node dist/infra/persistence/database/typeorm/run-migrations.js",
+    "migration:revert": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert -d src/infra/persistence/database/typeorm/data-source.ts",
+    "migration:show": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:show -d src/infra/persistence/database/typeorm/data-source.ts"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
