@@ -38,7 +38,7 @@ export class LoginUserUseCase {
       user.password.value,
     );
     if (!isPasswordValid) throw new UnauthorizedException('Invalid password');
-    if (!user.isEmailVerified && envConfig.NODE_ENV === 'production')
+    if (!user.isEmailVerified && envConfig.EMAIL_VERIFICATION)
       throw new UnauthorizedException('Email not verified');
 
     const accessToken = await this.jwtService.sign({

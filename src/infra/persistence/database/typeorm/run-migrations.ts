@@ -2,9 +2,9 @@ import { dataSource } from './data-source';
 
 async function runMigrations() {
   try {
-    console.log('Connecting to database...');
+    console.log('Initializing database connection...');
     await dataSource.initialize();
-    console.log('Database connected successfully');
+    console.log('Database connection established.');
 
     console.log('Running migrations...');
     const migrations = await dataSource.runMigrations();
@@ -23,6 +23,10 @@ async function runMigrations() {
     process.exit(0);
   } catch (error) {
     console.error('Error running migrations:', error);
+    // Ensure connection is destroyed even on error
+    if (dataSource.isInitialized) {
+      await dataSource.destroy();
+    }
     process.exit(1);
   }
 }

@@ -18,6 +18,8 @@ if (process.env.NODE_ENV !== 'development') {
     PORT: process.env.PORT,
     HOST: process.env.HOST,
     LOG_LEVEL: process.env.LOG_LEVEL,
+    EMAIL_VERIFICATION: process.env.EMAIL_VERIFICATION,
+
     // Database Configuration
     POSTGRES_DB_HOST: process.env.POSTGRES_DB_HOST,
     POSTGRES_DB_PORT: process.env.POSTGRES_DB_PORT,
@@ -53,6 +55,7 @@ export const envConfig = {
     .asEnum(['development', 'production', 'test']),
   PORT: env.get('PORT').required().asPortNumber(),
   HOST: env.get('HOST').required().asString(),
+  EMAIL_VERIFICATION: env.get('EMAIL_VERIFICATION').default('false').asBool(),
 
   // LOGGING CONFIGURATION
   LOG_LEVEL: env.get('LOG_LEVEL').required().asEnum(Object.values(LogLevel)),

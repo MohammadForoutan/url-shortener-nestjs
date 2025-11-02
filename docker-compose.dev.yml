@@ -44,7 +44,7 @@ services:
       - CORS_ALLOWED_HEADERS=${CORS_ALLOWED_HEADERS:-Content-Type,Authorization}
 
       # Logging
-      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_LEVEL=${LOG_LEVEL:-debug}
     depends_on:
       - postgres
       - redis
@@ -53,7 +53,7 @@ services:
       - /app/node_modules
     networks:
       - url_shortener_network
-    restart: unless-stopped
+    restart: always
 
   postgres:
     image: postgres:18-alpine3.22

@@ -14,6 +14,7 @@ RUN npm install -g pnpm@10.17.0
 # Copy only dependency manifests
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY scripts/ ./scripts/
+COPY configs/ ./configs/
 
 # Install ALL dependencies (dev + prod) for build
 RUN pnpm install --frozen-lockfile
@@ -29,11 +30,8 @@ FROM node:24-bookworm-slim AS production
 
 WORKDIR /app
 
-# Install pnpm globally and netcat for health checks
-RUN npm install -g pnpm@10.17.0 && \
-  apt-get update && \
-  apt-get install -y netcat-openbsd && \
-  rm -rf /var/lib/apt/lists/*
+# Install pnpm globally
+RUN npm install -g pnpm@10.17.0
 
 # Copy package files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
@@ -43,11 +41,6 @@ RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 
 # Copy built dist from builder
 COPY --from=builder /app/dist ./dist
-
-# Copy startup scripts
-COPY scripts/start-prod.sh ./scripts/start-prod.sh
-COPY scripts/run-migrations.sh ./scripts/run-migrations.sh
-RUN chmod +x ./scripts/start-prod.sh ./scripts/run-migrations.sh
 
 # Optional: Copy any runtime config if needed
 # COPY config/ ./config/

@@ -1,31 +1,36 @@
-/* eslint-disable n/no-process-env */
 import type { DataSourceOptions } from 'typeorm';
 
-import { config } from 'dotenv';
 import path from 'node:path';
 import process from 'node:process';
 import { DataSource } from 'typeorm';
 
+import { envConfig } from '../../../env';
+
 // Load environment variables
-if (process.env.NODE_ENV !== 'production') {
-  config({ path: path.join(process.cwd(), '.env') });
-}
+const nodeEnv = envConfig.NODE_ENV;
 
-const nodeEnv = process.env.NODE_ENV || 'development';
+const productionMigrationsPath = path.join(
+  process.cwd(),
+  'dist/infra/persistence/migrations/**/*.{js,js}',
+);
+const developmentMigrationsPath = path.join(
+  process.cwd(),
+  'src/infra/persistence/migrations/**/*.{ts,js}',
+);
 
-const dataSourceOptions: DataSourceOptions = {
+export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  host: process.env.POSTGRES_DB_HOST || 'localhost',
-  port: parseInt(process.env.POSTGRES_DB_PORT || '5432', 10),
-  username: process.env.POSTGRES_DB_USERNAME || 'postgres',
-  password: process.env.POSTGRES_DB_PASSWORD || 'postgres',
-  database: process.env.POSTGRES_DB_DATABASE || 'url_shortener',
-  schema: process.env.POSTGRES_DB_SCHEMA || 'public',
+  host: envConfig.POSTGRES_DB_HOST,
+  port: envConfig.POSTGRES_DB_PORT,
+  username: envConfig.POSTGRES_DB_USERNAME,
+  password: envConfig.POSTGRES_DB_PASSWORD,
+  database: envConfig.POSTGRES_DB_DATABASE,
+  schema: envConfig.POSTGRES_DB_SCHEMA,
   entities: [path.join(__dirname, 'entities/**/*.entity.{ts,js}')],
   migrations: [
     nodeEnv === 'production'
-      ? path.join(__dirname, '../migrations/**/*.js')
-      : path.join(process.cwd(), 'src/infra/persistence/migrations/**/*.ts'),
+      ? productionMigrationsPath
+      : developmentMigrationsPath,
   ],
   synchronize: false,
   logging: nodeEnv !== 'production',
