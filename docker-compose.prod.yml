@@ -45,8 +45,10 @@ services:
       # Logging
       - LOG_LEVEL=${LOG_LEVEL}
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - url_shortener_network
     restart: unless-stopped
@@ -71,6 +73,11 @@ services:
     networks:
       - url_shortener_network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_DB_USERNAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine

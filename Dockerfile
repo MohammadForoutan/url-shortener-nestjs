@@ -14,6 +14,7 @@ RUN npm install -g pnpm@10.17.0
 # Copy only dependency manifests
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY scripts/ ./scripts/
+COPY configs/ ./configs/
 
 # Install ALL dependencies (dev + prod) for build
 RUN pnpm install --frozen-lockfile

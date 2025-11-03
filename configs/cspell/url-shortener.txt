@@ -4,7 +4,10 @@ changeme
 dtos
 fullstacksjs
 healthcheck
+isready
+netcat
 nodenext
+ossp
 redispass
 requirepass
 slugified

@@ -3,7 +3,7 @@ import { UserRepository } from '@app/application/ports/user.repository';
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { envConfig } from '../../../env';
+import { dataSourceOptions } from './data-source';
 import { UrlEntity } from './entities/url.entity';
 import { UserEntity } from './entities/user.entity';
 import { TypeormUserRepository } from './repositories';
@@ -14,19 +14,7 @@ import { TypeormUnitOfWork } from './unit-of-work';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, UrlEntity]),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: envConfig.POSTGRES_DB_HOST,
-      port: envConfig.POSTGRES_DB_PORT,
-      username: envConfig.POSTGRES_DB_USERNAME as string,
-      password: envConfig.POSTGRES_DB_PASSWORD as string,
-      database: envConfig.POSTGRES_DB_DATABASE as string,
-      autoLoadEntities: true,
-      synchronize: envConfig.NODE_ENV !== 'production',
-      logging: envConfig.NODE_ENV !== 'production',
-      connectTimeoutMS: 10000,
-      poolSize: 10,
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
   ],
   providers: [
     TypeormUnitOfWork,
