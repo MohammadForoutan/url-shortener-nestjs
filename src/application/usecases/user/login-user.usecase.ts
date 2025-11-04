@@ -1,3 +1,4 @@
+import { MSG } from '@app/application/common';
 import { HashService, JwtServicePort } from '@app/application/ports';
 // TODO: implement port for environment variables
 import { envConfig } from '@app/infra';
@@ -30,16 +31,17 @@ export class LoginUserUseCase {
   async execute(input: LoginUserCommand): Promise<LoginUserResponse> {
     const user = await this.userRepository.findByEmail(input.email);
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException(MSG.USER_NOT_FOUND);
     }
 
     const isPasswordValid = await this.hashService.verifyPassword(
       input.password,
       user.password.value,
     );
-    if (!isPasswordValid) throw new UnauthorizedException('Invalid password');
+    if (!isPasswordValid)
+      throw new UnauthorizedException(MSG.INVALID_CREDENTIALS);
     if (!user.isEmailVerified && envConfig.EMAIL_VERIFICATION)
-      throw new UnauthorizedException('Email not verified');
+      throw new UnauthorizedException(MSG.EMAIL_NOT_VERIFIED);
 
     const accessToken = await this.jwtService.sign({
       userId: user.id,

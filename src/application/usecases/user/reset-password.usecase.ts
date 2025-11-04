@@ -1,3 +1,4 @@
+import { MSG } from '@app/application/common';
 import { Password } from '@app/domain/user/value-objects';
 import {
   BadRequestException,
@@ -28,12 +29,12 @@ export class ResetPasswordUseCase {
       input.passwordResetToken,
     );
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException(MSG.USER_NOT_FOUND);
     }
 
     const isTokenExpired = user.isPasswordResetTokenExpired();
     if (isTokenExpired) {
-      throw new BadRequestException('Password reset token expired');
+      throw new BadRequestException(MSG.PASSWORD_RESET_TOKEN_EXPIRED);
     }
 
     const password = Password.fromInput(input.password);

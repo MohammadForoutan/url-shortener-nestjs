@@ -1,3 +1,4 @@
+import { MSG } from '@app/application/common';
 import {
   BadRequestException,
   Injectable,
@@ -22,11 +23,11 @@ export class ResendVerificationEmailUseCase {
 
     const user = await this.userRepository.findByEmail(input.email);
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException(MSG.USER_NOT_FOUND);
     }
 
     if (user.isEmailVerified) {
-      throw new BadRequestException('Email already verified');
+      throw new BadRequestException(MSG.EMAIL_ALREADY_VERIFIED);
     }
 
     const verificationToken = user.generateVerificationToken();
