@@ -15,6 +15,6 @@ export default defineConfig(
     },
   },
   {
-    ignores: ['node_modules', 'dist', '.vscode', '.idea'],
+    ignores: ['node_modules', 'dist', '.vscode', '.idea', 'tmp'],
   },
 );
