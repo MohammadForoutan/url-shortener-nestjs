@@ -23,12 +23,12 @@ export class UpdateUrlDto {
 
   @IsOptional()
   @IsDate()
-  @Transform(({ value }) => (value ? new Date(value) : null))
+  @Transform(({ value }) => (value ? new Date(value) : undefined))
   @ApiProperty({
     description: 'The expiration date of the url',
     example: '2025-10-25',
     nullable: true,
     type: Date,
   })
-  expirationDate: Date | null = null;
+  expirationDate?: Date;
 }
