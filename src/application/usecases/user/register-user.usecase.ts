@@ -1,3 +1,4 @@
+import { MSG } from '@app/application/common';
 import {
   EmailService,
   HashService,
@@ -29,7 +30,7 @@ export class RegisterUserUseCase {
       input.email,
     );
     if (isUserAlreadyExists) {
-      throw new ConflictException('User already exists');
+      throw new ConflictException(MSG.USER_ALREADY_EXISTS);
     }
 
     const password = Password.fromInput(input.password);

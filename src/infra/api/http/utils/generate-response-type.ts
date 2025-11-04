@@ -1,3 +1,4 @@
+import type { MSG } from '@app/application/common';
 import type { HttpStatus, Type } from '@nestjs/common';
 
 import { applyDecorators } from '@nestjs/common';
@@ -6,13 +7,34 @@ import { ApiExtraModels, ApiResponse, getSchemaPath } from '@nestjs/swagger';
 import type { NotUndefined } from '../../pagination';
 
 export function generateResponseSchema<T>(props: {
-  model: Type<NotUndefined<T>>;
+  model: Type<NotUndefined<T>> | null;
   description: string;
   status: HttpStatus;
   success: boolean;
   isPaginated?: boolean;
-  message?: string | string[];
+  message?: string | MSG | string[];
 }) {
+  if (!props.model) {
+    const responseSchema = {
+      status: props.status,
+      description: props.description,
+      schema: {
+        type: 'object',
+        properties: {
+          statusCode: { type: 'number', example: props.status },
+          success: { type: 'boolean', example: props.success },
+          message: {
+            oneOf: [
+              { type: 'string' },
+              { type: 'array', items: { type: 'string' } },
+            ],
+            nullable: true,
+          },
+        },
+      },
+    } as const;
+    return applyDecorators(ApiResponse(responseSchema));
+  }
   const dataSchema =
     props.isPaginated === true
       ? {

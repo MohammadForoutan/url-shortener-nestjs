@@ -1,14 +1,10 @@
-import { ResponseFormat } from '@app/infra/api';
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { MSG } from '@app/application/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { EmailService, UserRepository } from '../../ports';
 
 interface ForgotPasswordCommand {
   email: string;
-}
-
-interface ForgotPasswordResponse {
-  message: string;
 }
 
 @Injectable()
@@ -18,12 +14,10 @@ export class ForgotPasswordUseCase {
     private readonly emailService: EmailService,
   ) {}
 
-  async execute(
-    input: ForgotPasswordCommand,
-  ): Promise<ResponseFormat<ForgotPasswordResponse>> {
+  async execute(input: ForgotPasswordCommand): Promise<void> {
     const user = await this.userRepository.findByEmail(input.email);
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException(MSG.USER_NOT_FOUND);
     }
 
     const passwordResetToken = user.generatePasswordResetToken();
@@ -34,14 +28,5 @@ export class ForgotPasswordUseCase {
     );
 
     await this.userRepository.update(user);
-
-    return {
-      data: {
-        message: 'Password reset email sent successfully',
-      },
-      statusCode: HttpStatus.OK,
-      success: true,
-      message: 'Password reset email sent successfully',
-    };
   }
 }

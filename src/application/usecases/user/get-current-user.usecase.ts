@@ -20,7 +20,7 @@ export class GetCurrentLoginUserUseCase {
   ): Promise<GetCurrentLoginUserResponse> {
     const user = await this.userRepository.findById(input.userId);
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException(MSG.USER_NOT_FOUND);
     }
 
     return { user: new UserReadModel(user) };

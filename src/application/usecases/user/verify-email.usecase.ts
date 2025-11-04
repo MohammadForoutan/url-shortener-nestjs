@@ -1,3 +1,4 @@
+import { MSG } from '@app/application/common';
 import {
   BadRequestException,
   Injectable,
@@ -17,14 +18,14 @@ export class VerifyEmailUseCase {
   async execute(input: VerifyEmailCommand): Promise<void> {
     const user = await this.userRepository.findByVerificationToken(input.token);
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException(MSG.USER_NOT_FOUND);
     }
 
     if (user.isEmailVerified) {
       user.verifyEmail();
       await this.userRepository.update(user);
 
-      throw new BadRequestException('Email already verified');
+      throw new BadRequestException(MSG.EMAIL_ALREADY_VERIFIED);
     }
 
     user.verifyEmail();

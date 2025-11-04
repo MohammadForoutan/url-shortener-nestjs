@@ -1,3 +1,4 @@
+import { MSG } from '@app/application/common';
 import {
   ForgotPasswordUseCase,
   LoginUserUseCase,
@@ -19,11 +20,20 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import {
+  ForgotPasswordDoc,
+  LoginDoc,
+  RegisterDoc,
+  ResendVerificationEmailDoc,
+  ResetPasswordDoc,
+  VerifyEmailDoc,
+} from './docs';
+import {
   ForgotPasswordDto,
   LoginDto,
   RegisterDto,
   ResetPasswordDto,
 } from './dtos';
+import { LoginUserResponse } from './responses';
 
 @Controller({
   path: 'auth',
@@ -39,84 +49,91 @@ export class AuthV1Controller {
     private forgotPasswordUseCase: ForgotPasswordUseCase,
     private resetPasswordUseCase: ResetPasswordUseCase,
   ) {}
+
+  @LoginDoc()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
     @Body() loginDto: LoginDto,
-  ): Promise<ResponseFormat<{ accessToken: string }>> {
+  ): Promise<ResponseFormat<LoginUserResponse>> {
     const response = await this.loginUserUseCase.execute(loginDto);
 
     return {
-      data: response,
+      data: { accessToken: response.accessToken },
       statusCode: HttpStatus.OK,
       success: true,
-      message: 'User login successfully',
+      message: MSG.LOGIN_SUCCESS,
     };
   }
 
+  @RegisterDoc()
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   async register(
     @Body() registerDto: RegisterDto,
-  ): Promise<ResponseFormat<void>> {
+  ): Promise<ResponseFormat<null>> {
     await this.registerUserUseCase.execute(registerDto);
     return {
-      data: undefined,
+      data: null,
       statusCode: HttpStatus.CREATED,
       success: true,
-      message: 'User registered successfully',
+      message: MSG.REGISTER_SUCCESS,
     };
   }
 
+  @VerifyEmailDoc()
   @Get('verify-email')
   async verifyEmail(
     @Query('token') token: string,
-  ): Promise<ResponseFormat<void>> {
+  ): Promise<ResponseFormat<null>> {
     await this.verifyEmailUseCase.execute({ token });
     return {
-      data: undefined,
+      data: null,
       statusCode: HttpStatus.OK,
       success: true,
-      message: 'Email verified successfully',
+      message: MSG.VERIFY_EMAIL_SUCCESS,
     };
   }
 
+  @ResendVerificationEmailDoc()
   @Get('resend-verification-email')
   async sendVerificationEmail(
     @Query('email') email: string,
-  ): Promise<ResponseFormat<void>> {
+  ): Promise<ResponseFormat<null>> {
     await this.resendVerificationEmailUseCase.execute({ email });
     return {
-      data: undefined,
+      data: null,
       statusCode: HttpStatus.OK,
       success: true,
-      message: 'Verification email sent successfully',
+      message: MSG.RESEND_VERIFICATION_EMAIL_SUCCESS,
     };
   }
 
+  @ForgotPasswordDoc()
   @Post('forgot-password')
   async forgotPassword(
     @Body() forgotPasswordDto: ForgotPasswordDto,
-  ): Promise<ResponseFormat<void>> {
+  ): Promise<ResponseFormat<null>> {
     await this.forgotPasswordUseCase.execute(forgotPasswordDto);
     return {
-      data: undefined,
+      data: null,
       statusCode: HttpStatus.OK,
       success: true,
-      message: 'Password reset email sent successfully',
+      message: MSG.FORGOT_PASSWORD_SUCCESS,
     };
   }
 
+  @ResetPasswordDoc()
   @Post('reset-password')
   async resetPassword(
     @Body() resetPasswordDto: ResetPasswordDto,
-  ): Promise<ResponseFormat<void>> {
+  ): Promise<ResponseFormat<null>> {
     await this.resetPasswordUseCase.execute(resetPasswordDto);
     return {
-      data: undefined,
+      data: null,
       statusCode: HttpStatus.OK,
       success: true,
-      message: 'Password reset successfully',
+      message: MSG.RESET_PASSWORD_SUCCESS,
     };
   }
 }
