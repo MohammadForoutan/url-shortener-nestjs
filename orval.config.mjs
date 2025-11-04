@@ -1,10 +1,16 @@
 import { defineConfig } from 'orval';
 
 export default defineConfig({
-  'url-shortener-api': {
+  urlShortener: {
     input: {
-      target: 'http://localhost:3000/api/docs-json',
+      target: 'https://server.gglink.ir/api/docs-json',
     },
-    output: './tmp/api.ts',
+    output: {
+      mode: 'tags-split',
+      target: 'tmp/api/url-shortener.ts',
+      schemas: 'tmp/model',
+      client: 'react-query',
+      baseUrl: 'https://server.gglink.ir',
+    },
   },
 });

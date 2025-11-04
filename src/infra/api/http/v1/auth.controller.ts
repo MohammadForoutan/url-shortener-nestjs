@@ -40,6 +40,7 @@ export class AuthV1Controller {
     private resetPasswordUseCase: ResetPasswordUseCase,
   ) {}
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   async login(
     @Body() loginDto: LoginDto,
   ): Promise<ResponseFormat<{ accessToken: string }>> {
