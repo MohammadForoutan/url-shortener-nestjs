@@ -67,7 +67,7 @@ services:
     ports:
       - '${POSTGRES_DB_PORT}:5432'
     volumes:
-      - postgres_data_prod:/var/lib/postgresql/data
+      - postgres_data_prod:/var/lib/postgresql/docker
     networks:
       - url_shortener_network
     restart: unless-stopped
