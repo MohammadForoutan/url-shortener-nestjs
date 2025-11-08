@@ -59,6 +59,7 @@
     "class-validator": "0.14.2",
     "dotenv": "17.2.3",
     "env-var": "7.5.0",
+    "helmet": "8.1.0",
     "nanoid": "5.1.6",
     "nestjs-pino": "4.4.1",
     "pg": "^8.16.3",
