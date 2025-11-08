@@ -16,10 +16,10 @@ export class UrlReadModel {
   originalUrl: string;
 
   @ApiProperty({
-    description: 'The click count of the url',
+    description: 'The visits count of the url',
     example: 23,
   })
-  clickCount: number;
+  visitsCount: number;
 
   @ApiProperty({
     description: 'The short url of the url',
@@ -49,7 +49,7 @@ export class UrlReadModel {
   constructor(url: Url) {
     this.id = url.id;
     this.originalUrl = url.originalUrl.value;
-    this.clickCount = url.clickCount;
+    this.visitsCount = url.visitsCount;
     this.shortUrl = `${envConfig.APP_URL}${url.shortUrl.value}`;
     this.expirationDate = url.expirationDate;
     this.createdAt = url.createdAt;

@@ -10,7 +10,7 @@ export class Url extends AggregateRoot<string> {
   public originalUrl: OriginalLink;
   public shortUrl: ShortLink;
   public isCustom: boolean;
-  public clickCount: number;
+  public visitsCount: number;
   public expirationDate: Date | null;
   public createdAt: Date;
   public updatedAt: Date;
@@ -21,7 +21,7 @@ export class Url extends AggregateRoot<string> {
     originalUrl: OriginalLink;
     shortUrl: ShortLink;
     isCustom: boolean;
-    clickCount: number;
+    visitsCount: number;
     expirationDate: Date | null;
     createdAt: Date;
     updatedAt: Date;
@@ -32,7 +32,7 @@ export class Url extends AggregateRoot<string> {
     this.originalUrl = props.originalUrl;
     this.shortUrl = props.shortUrl;
     this.isCustom = props.isCustom;
-    this.clickCount = props.clickCount;
+    this.visitsCount = props.visitsCount;
     this.expirationDate = props.expirationDate;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
@@ -44,7 +44,7 @@ export class Url extends AggregateRoot<string> {
     originalUrl: string;
     shortUrl: ShortLink;
     isCustom: boolean;
-    clickCount: number | null;
+    visitsCount: number | null;
     expirationDate: Date | null;
     createdAt?: Date;
     updatedAt?: Date;
@@ -53,14 +53,14 @@ export class Url extends AggregateRoot<string> {
     const id = generateId(props.id);
     // TODO: When we get input as VO or as string (Think)
     const originalUrl = OriginalLink.fromInput(props.originalUrl);
-    const clickCount = props.clickCount ?? 0;
+    const visitsCount = props.visitsCount ?? 0;
 
     return new Url({
       id,
       originalUrl,
       shortUrl: props.shortUrl,
       isCustom: props.isCustom,
-      clickCount,
+      visitsCount,
       expirationDate: props.expirationDate,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
@@ -72,8 +72,8 @@ export class Url extends AggregateRoot<string> {
     return url.split('/').pop() ?? null;
   }
 
-  incrementClickCount(): void {
-    this.clickCount++;
+  incrementVisitsCount(): void {
+    this.visitsCount++;
   }
 
   isExpired(): boolean {

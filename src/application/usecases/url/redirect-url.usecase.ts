@@ -30,7 +30,7 @@ export class RedirectUrlUseCase {
       throw new BadRequestException('Url expired');
     }
 
-    url.incrementClickCount();
+    url.incrementVisitsCount();
 
     // don't await this, it will block the request
     void this.urlRepository.update(url);

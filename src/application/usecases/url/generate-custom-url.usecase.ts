@@ -42,7 +42,7 @@ export class GenerateCustomUrlUseCase {
       originalUrl: input.originalUrl,
       shortUrl,
       isCustom: true,
-      clickCount: 0,
+      visitsCount: 0,
       expirationDate: input.expirationDate ?? null,
       owner,
     });

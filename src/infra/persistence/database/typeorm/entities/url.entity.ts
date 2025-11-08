@@ -25,7 +25,7 @@ export class UrlEntity {
   isCustom: boolean;
 
   @Column({ type: 'integer', default: 0 })
-  clickCount: number;
+  visitsCount: number;
 
   @Column({ type: 'timestamp', nullable: true })
   expirationDate: Date | null;

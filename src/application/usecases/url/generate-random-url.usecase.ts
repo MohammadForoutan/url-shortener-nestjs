@@ -32,7 +32,7 @@ export class GenerateRandomUrlUseCase {
       originalUrl: input.originalUrl,
       shortUrl: ShortLink.fromInput(),
       isCustom: false,
-      clickCount: 0,
+      visitsCount: 0,
       expirationDate: input.expirationDate,
       owner,
     });
